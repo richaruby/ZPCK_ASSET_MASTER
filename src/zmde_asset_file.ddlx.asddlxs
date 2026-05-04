@@ -1,0 +1,99 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+  typeName: 'Asset File',
+  typeNamePlural: 'Asset Files',
+  title: { type: #STANDARD, value: 'FileId' },
+  description: { type: #STANDARD, value: 'FileStatus' }
+}
+
+annotate entity ZC_ASSET_FILE with
+{
+  @UI.facet: [
+    {
+      id: 'idEndUser',
+      purpose: #HEADER,
+      position: 10,
+      type: #DATAPOINT_REFERENCE,
+      targetQualifier: 'tqEndUser'
+    },
+    {
+      id: 'idStatus',
+      purpose: #HEADER,
+      position: 20,
+      type: #DATAPOINT_REFERENCE,
+      targetQualifier: 'tqStatus'
+    },
+    {
+      id: 'idFile',
+      purpose: #STANDARD,
+      position: 30,
+      label: 'File Upload',
+      type: #IDENTIFICATION_REFERENCE
+    },
+    {
+      id: 'idData',
+      purpose: #STANDARD,
+      position: 40,
+      label: 'Asset Data',
+      type: #LINEITEM_REFERENCE,
+      targetElement: '_AssetData'
+    }
+  ]
+
+  /* End User */
+  @UI.dataPoint: { qualifier: 'tqEndUser', title: 'Person Responsible' }
+  @UI.identification: [
+    { type: #FOR_ACTION, label: 'Upload Data',    dataAction: 'uploadExcelData' },
+    { type: #FOR_ACTION, label: 'Create Asset',   dataAction: 'create_asset' }
+  ]
+  EndUser;
+
+  /* File ID */
+  @UI.hidden: true
+  FileId;
+
+  /* File Status */
+  @UI.lineItem: [{ position: 10, label: 'File Status' }]
+  @UI.dataPoint: { qualifier: 'tqStatus', title: 'File Status' }
+  FileStatus;
+
+  /* Attachment */
+  @UI.identification: [{ position: 20, label: 'Select Excel File to Upload' }]
+  Attachment;
+
+  @UI.hidden: true
+  Mimetype;
+
+  /* Filename */
+  @UI.lineItem: [{ position: 20, label: 'Filename' }]
+  //  @UI.identification: [{ position: 30, label: 'Filename' }]
+  Filename;
+
+  /* Created On */
+  @UI.lineItem: [{ position: 30, label: 'Created On' }]
+  //  @UI.identification: [{ position: 40, label: 'Created On' }]
+  CreateOndt;
+
+  /* Audit Fields */
+  @UI.lineItem: [{ position: 40, label: 'Created By' }]
+  LocalCreatedBy;
+
+  @UI.lineItem: [{ position: 50, label: 'Created Date & Time' }]
+  LocalCreatedAt;
+
+  @UI.hidden: true
+  LocalLastChangedBy;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  UiRefreshTs;
+
+  @UI.hidden: true
+  _AssetData;
+
+}

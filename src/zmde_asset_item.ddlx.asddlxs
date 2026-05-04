@@ -1,0 +1,97 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+  typeName: 'Asset Item',
+  typeNamePlural: 'Asset Items',
+  title: { type: #STANDARD, value: 'AssetClass' },
+  description: { type: #STANDARD, value: 'AssetDesc' }
+}
+
+annotate entity ZC_ASSET_ITEM with
+{
+  @UI.facet: [
+    {
+      id: 'idGeneral',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      position: 10
+    }
+  ]
+
+  /* -------------------- Keys (Hidden) -------------------- */
+
+  @UI.hidden: true
+  EndUser;
+
+  @UI.hidden: true
+  FileId;
+
+  @UI.hidden: true
+  LineId;
+
+  @UI.hidden: true
+  LineNo1;
+
+  /* -------------------- Asset No (Top) -------------------- */
+
+  @UI.identification: [{ position: 10, label: 'Asset No' }]
+  @UI.lineItem: [{ position: 10, label: 'Asset No' }]
+  Assetno;
+
+  /* -------------------- Identification -------------------- */
+
+  @UI.identification: [{ position: 20, label: 'Company Code' }]
+  @UI.lineItem: [{ position: 20, label: 'Company Code' }]
+  CompanyCode;
+
+  @UI.identification: [{ position: 30, label: 'Plant' }]
+  @UI.lineItem: [{ position: 30, label: 'Plant' }]
+  Plant;
+
+  @UI.identification: [{ position: 40, label: 'Profit Center' }]
+  @UI.lineItem: [{ position: 40, label: 'Profit Center' }]
+  ProfitCenter;
+
+  @UI.identification: [{ position: 50, label: 'Cost Center' }]
+  @UI.lineItem: [{ position: 50, label: 'Cost Center' }]
+  CostCenter;
+
+  @UI.identification: [{ position: 60, label: 'Base UoM' }]
+  @UI.lineItem: [{ position: 60, label: 'Base UoM' }]
+  BaseUom;
+
+  @UI.identification: [{ position: 70, label: 'Asset Class' }]
+  @UI.lineItem: [{ position: 70, label: 'Asset Class' }]
+  AssetClass;
+
+  @UI.identification: [{ position: 80, label: 'Asset Description' }]
+  @UI.lineItem: [{ position: 80, label: 'Asset Description' }]
+  AssetDesc;
+
+  @UI.identification: [{ position: 90, label: 'Asset Description 2' }]
+  @UI.lineItem: [{ position: 90, label: 'Asset Desc 2' }]
+  AssetDesc2;
+
+  @UI.identification: [{ position: 100, label: 'Ledger' }]
+  @UI.lineItem: [{ position: 100, label: 'Ledger' }]
+  Ledger;
+
+  @UI.identification: [{ position: 110, label: 'Real Depreciation Area' }]
+  @UI.lineItem: [{ position: 110, label: 'Dep. Area' }]
+  RealDepArea;
+
+  @UI.identification: [{ position: 120, label: 'Scrap Value %' }]
+  @UI.lineItem: [{ position: 120, label: 'Scrap Val %' }]
+  ScrapValPct;
+
+  /* -------------------- Hidden -------------------- */
+
+  @UI.hidden: true
+  CreatedBy;
+
+  @UI.hidden: true
+  CreatedOn;
+
+  @UI.hidden: true
+  _AssetFile;
+
+}

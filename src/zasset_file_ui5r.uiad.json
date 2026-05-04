@@ -1,0 +1,35 @@
+{
+  "formatVersion": "2",
+  "header": {
+    "description": "An SAP Fiori application.",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD",
+    "targetMappingTitle": "Asset Master Upload"
+  },
+  "ui5AppDetails": {
+    "appId": "zassetfile"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_E621EDDF3C9FE6D3CC24B467FA9D3D00FC986363_TM",
+    "semanticObject": "zasset_file",
+    "action": "Display",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_E621EDDF3C9FE6D3CC24B467FA9D3D00FC986363_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "Asset Master Upload",
+        "icon": "sap-icon://upload"
+      }
+    }
+  ]
+}

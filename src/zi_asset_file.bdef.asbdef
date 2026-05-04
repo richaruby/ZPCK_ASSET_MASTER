@@ -1,0 +1,112 @@
+managed implementation in class zbp_i_asset_file unique;
+strict ( 2 );
+with draft;
+
+define behavior for ZI_ASSET_FILE alias AssetFile
+
+persistent table zdb_asset_file
+lock master
+total etag LastChangedAt
+draft table zdr_asset_file
+early numbering
+authorization master ( instance )
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly ) EndUser, FileId;
+
+  association _AssetData { create; with draft; }
+
+  // Logic to read excel data into associated entity ZMAKS_I_XL_DATA
+  action uploadExcelData result [1] $self;
+
+  action create_asset result [1] $self;
+
+  // Change File Status During Creation of new record
+  determination FillFileStatus on modify { field EndUser; }
+
+  // Change File Status When file is selected
+  determination FillSelectedStatus on modify { field Attachment; }
+  //  action ( features : instance ) downloadTemplate result [1] $self;
+  side effects
+  {
+    field Attachment affects field FileStatus;
+    action uploadExcelData affects $self, messages;
+    //    action create_asset affects $self, entity _AssetData, messages;
+    // Explicitly tell the UI that this action changes the child items
+    action create_asset affects entity _AssetData, field FileStatus, messages;
+
+  }
+
+  // Draft actions
+  draft action Activate optimized;
+  draft action Edit;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  mapping for zdb_asset_file
+    {
+      EndUser            = end_user;
+      FileId             = file_id;
+      FileStatus         = file_status;
+      Attachment         = attachment;
+      Mimetype           = mimetype;
+      Filename           = filename;
+      CreateOndt         = create_ondt;
+      LocalCreatedBy     = local_created_by;
+      LocalCreatedAt     = local_created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+      UiRefreshTs        = ui_refresh_ts;
+    }
+}
+
+define behavior for ZI_ASSET_ITM alias AssetItem
+implementation in class zbp_i_asset_file unique
+persistent table zdb_asset_itm
+draft table zdr_asset_itm
+lock dependent by _AssetFile
+authorization dependent by _AssetFile
+{
+
+  update;
+  delete;
+
+  field ( readonly )
+  EndUser,
+  FileId,
+  LineNo1;
+
+  field ( readonly, numbering : managed ) LineId;
+
+  association _AssetFile { with draft; }
+
+  action processData result [1] $self;
+
+  mapping for zdb_asset_itm
+    {
+      EndUser      = end_user;
+      FileId       = file_id;
+      LineId       = line_id;
+      LineNo1      = line_no;
+      CompanyCode  = company_code;
+      Plant        = plant;
+      ProfitCenter = profit_center;
+      CostCenter   = cost_center;
+      BaseUom      = base_uom;
+      AssetClass   = asset_class;
+      AssetDesc    = asset_desc;
+      AssetDesc2   = asset_desc2;
+      Ledger       = ledger;
+      RealDepArea  = real_dep_area;
+      ScrapValPct  = scrap_val_pct;
+      Assetno      = assetno;
+      CreatedBy    = created_by;
+      CreatedOn    = created_on;
+    }
+}

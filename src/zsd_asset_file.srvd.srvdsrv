@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service definition for Asset file upload'
+define service ZSD_ASSET_FILE {
+  expose ZC_ASSET_FILE;
+  expose ZC_ASSET_ITEM;
+}

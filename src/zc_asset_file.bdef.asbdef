@@ -1,0 +1,40 @@
+projection;
+strict ( 2 );
+use draft;
+
+define behavior for ZC_ASSET_FILE alias AssetFile
+{
+  use create;
+  use update;
+  use delete;
+
+  use action uploadExcelData;
+  use action create_asset;
+
+  use action Activate;
+  use action Edit;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+
+  use association _AssetData { create; with draft; }
+   side effects
+  {
+    field Attachment affects field FileStatus;
+    action uploadExcelData affects $self, messages;
+    //    action create_asset affects $self, entity _AssetData, messages;
+    // Explicitly tell the UI that this action changes the child items
+    action create_asset affects entity _AssetData, field FileStatus, messages;
+
+  }
+}
+
+define behavior for ZC_ASSET_ITEM alias AssetItem
+{
+  use update;
+  use delete;
+
+  use action processData;
+
+  use association _AssetFile { with draft; }
+}
